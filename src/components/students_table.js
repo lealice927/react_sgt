@@ -1,30 +1,15 @@
 import React, { Component } from 'react';
-import studentData from '../dummy_data/student_list';
 
 class StudentsTable extends Component {
-    state = {
-        students: []
-    }
 
-    componentDidMount() { //we need to componentDidMount to call our render method.
-        this.getStudentData();
-    }
-
-    getStudentData() {
-        //call server here
-
-        this.setState({
-            students: studentData
-        });
-    }
 
     render() {
-        const { students } = this.state; //this is the same as const students = this.state.students;
+        const { col = 's12', list } = this.props; //if the value is undefined, col will set it, otherwise it'll keep the default value
 
-        const studentElements = students.map((student) => {
-            return(
+        const studentElements = list.map((student) => {
+            return (
                 //for things to work properly, we need to have "key"
-                 <tr key={student.id}> 
+                <tr key={student.id}>
                     <td>{student.name}</td>
                     <td>{student.course}</td>
                     <td>{student.grade}</td>
@@ -33,7 +18,7 @@ class StudentsTable extends Component {
         });
 
         return (
-            <div className="col s12 m8">
+            <div className={`col ${col}`}>
                 <table>
                     <thead>
                         <tr>
