@@ -15,11 +15,29 @@ class App extends Component {
     }
 
     addStudent = (student) => {
-        student.id = id++; //this would not be done in real practice, this is just for testing!
+        student.id = id++; //this would NOT be done in real practice, this is just for testing!
 
         this.setState({
             students: [...this.state.students, student]
         });
+    }
+
+    deleteStudent = (id) => {
+        const studentsCopy = this.state.students.slice();
+        
+        const index = studentsCopy.findIndex((student) => {
+            return student.id === id;
+        });
+
+        if(index >= 0){
+            studentsCopy.splice(index, 1); //will remove student from the index @ position 1
+
+            this.setState({
+                students: [...studentsCopy]
+            });
+        }
+
+        // console.log('Found Index:', index);
     }
 
     componentDidMount() { //we need to componentDidMount to call our render method.
@@ -40,7 +58,7 @@ class App extends Component {
                 <h1 className="center">React SGT</h1>
 
                 <div className="row">
-                    <StudentsTable col="s12 m8" list={this.state.students} />
+                    <StudentsTable col="s12 m8" delete={this.deleteStudent} list={this.state.students} />
                     <AddStudent col="s12 m4" add={this.addStudent} />
                 </div>
             </div>
