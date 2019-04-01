@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import StudentRow from './student_row';
 
 class StudentsTable extends Component {
 
@@ -7,14 +8,8 @@ class StudentsTable extends Component {
         const { col = 's12', list } = this.props; //if the value is undefined, col will set it, otherwise it'll keep the default value
 
         const studentElements = list.map((student) => {
-            return (
-                //for things to work properly, we need to have "key"
-                <tr key={student.id}>
-                    <td>{student.name}</td>
-                    <td>{student.course}</td>
-                    <td>{student.grade}</td>
-                </tr>
-            )
+            // return <StudentRow key={student.id} name={student.name} course={student.course} grade={student.grade} id={student.id}/>
+            return <StudentRow delete={this.props.delete} key={student.id} {...student} /> //destructing, same as above
         });
 
         return (
@@ -25,6 +20,7 @@ class StudentsTable extends Component {
                             <th>Name</th>
                             <th>Course</th>
                             <th>Grade</th>
+                            <th>Actions</th>
                         </tr>
                     </thead>
                     <tbody>
